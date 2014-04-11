@@ -31,7 +31,7 @@
                 $error = true;
             }
             // Check for slow speed:
-            if($info['time_first'] > 0.5 || $info['time_total'] > 4)
+            if($info['time_first'] > 0.5 || $info['time_total'] > 2)
             {
                 $class .= ' slow';
                 $happy = false;
