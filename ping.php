@@ -34,6 +34,30 @@ function ping($url, $headerOnly = false)
 }
 
 /**
+ * Small function to follow redirects
+ *
+ * @param $url
+ * @return array
+ */
+function followRedirects($url)
+{
+    $path = array($url);
+    $info = ping($url);
+    $count = 0;
+    while(($info['code'] == 301 || $info['code'] == 302) && $count < 10)
+    {
+        $path[] = $info['redirect_url'];
+        $info = ping($info['redirect_url']);
+        $count ++;
+    }
+    return array(
+        'path' => $path,
+        'info' => $info,
+        'count' => $count
+    );
+}
+
+/**
  * Check URL
  *
  * @param $url
@@ -92,14 +116,18 @@ function check_url($url)
             if($resultNonWww['code'] != 200 && $resultWithWww['code'] != 200)
             {
                 // Both domains don't redirect to a page, check where they redirect to:
-
-                $redirectWithWww = ping($resultWithWww['redirect_url']);
-                $redirectNonWww = ping($resultNonWww['redirect_url']);
-                if($redirectWithWww['code'] == 200) {
-                    $resultWithWww = $redirectWithWww;
+                if(in_array($resultWithWww['code'], $redirectCodes) && !empty($resultWithWww['redirect_url']))
+                {
+                    $info = followRedirects($resultWithWww['redirect_url']);
+                    $resultWithWww = $info['info'];
+                    $resultWithWww['redirect_from'] = implode(' &gt; ', $info['path']);
                 }
-                if($redirectNonWww['code'] == 200) {
-                    $resultNonWww = $redirectNonWww;
+
+                if(in_array($resultNonWww['code'], $redirectCodes) && !empty($resultNonWww['redirect_url']))
+                {
+                    $info = followRedirects($resultNonWww['redirect_url']);
+                    $resultNonWww = $info['info'];
+                    $resultNonWww['redirect_from'] = implode(' &gt; ', $info['path']);
                 }
             }
 
@@ -180,7 +208,7 @@ if ($argc == 2) {
         // Read it all:
         $file = fopen($url, 'r');
         $csv  = array(
-            array("url","success","message","ip","www","time_first","time_total","code","size")
+            array("url","success","message","ip","www","time_first","time_total","code","size","redirect_url","redirect_from")
         );
         echo "Checking " . ($linecount - 1) . " URL's: \n";
         while($line = fgetcsv($file))
