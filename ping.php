@@ -1,4 +1,7 @@
 <?php
+
+define('DOCROOT', dirname(__FILE__));
+
 /**
  * Ping a URL
  *
@@ -117,7 +120,7 @@ if ($argc == 2) {
         }
         echo "Done!   \n";
         fclose($file);
-        $file = fopen('result.csv', 'w');
+        $file = fopen(DOCROOT . '/result.csv', 'w');
         foreach($csv as $line) {
             fputcsv($file, $line);
         }
