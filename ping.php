@@ -40,7 +40,13 @@ function check_url($url)
     $result = array(
         'url' => $url,
         'success' => 0,
-        'message' => ''
+        'message' => '',
+        'ip' => '',
+        'www' => false,
+        'time_first' => '',
+        'time_total' => '',
+        'code' => '',
+        'size' => ''
     );
 
     // Check if http://
@@ -50,20 +56,29 @@ function check_url($url)
         // Check if www:
         if (substr($url, 0, 4) == 'www.') {
             $url = substr($url, 4);
+            $isWww = true;
+        } else {
+            $isWww = false;
         }
 
         // Check non-www:
         $resultNonWww = ping($url);
 
         // Check www:
-        $resultWithWww = ping('www.' . $url);
+        if($isWww)
+        {
+            $resultWithWww = ping('www.' . $url);
+        } else {
+            $resultWithWww = $resultNonWww;
+        }
 
         $redirectCodes = array(301, 302);
 
         // Check for redirect:
         if(
             (in_array($resultWithWww['code'], $redirectCodes) && $resultNonWww['code'] == 200) ||
-            ($resultWithWww['code'] == 200 && in_array($resultNonWww['code'], $redirectCodes))
+            ($resultWithWww['code'] == 200 && in_array($resultNonWww['code'], $redirectCodes)) ||
+            !$isWww
         ) {
             // Redirect is correct.
             $siteResult = $resultWithWww['code'] == 200 ? $resultWithWww : $resultNonWww;
@@ -80,6 +95,7 @@ function check_url($url)
             }
         } else {
             $result['message'] = 'Www and non/www don\'t return 200/301/302';
+            $result = array_merge($result, $resultNonWww);
         }
     } else {
         $result['message'] = 'URL must start with http://';
