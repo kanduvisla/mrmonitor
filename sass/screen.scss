@@ -49,6 +49,13 @@ html, body {
 		font-size: 12px;
 		opacity: .5;
 	}
+    .message {
+        padding: 20px;
+        text-align: center;
+        margin-top: 20px;
+        color: #fff;
+        opacity: .5;
+    }
 	&.slow {
 		background: linear-gradient(#fc0, #a80);
 		@include box-shadow(0px 0px 100px #880 inset);
@@ -73,6 +80,9 @@ html, body {
 			text-shadow: 0px 0px 40px #f00;
 			opacity: 1;
 		}
+        .message {
+            opacity: 1;
+        }
 	}
 	&.count50 {
 		width: 10%;

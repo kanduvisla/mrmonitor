@@ -47,6 +47,7 @@
                     <p class="time"><?php echo
                             number_format($info['time_first'], 3, ',', '.'). '/' .
                             number_format($info['time_total'], 3, ',', '.'); ?></p>
+                    <p class="message"><?php echo $info['message']; ?></p>
                 </div>
             <?php
         }
