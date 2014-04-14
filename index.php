@@ -44,9 +44,11 @@
                 <div class="site <?php echo $class; ?>">
                     <p class="url"><?php echo str_replace(array('http://', 'www.'), '', $info['url']); ?></p>
                     <p class="code"><?php echo $info['code']; ?></p>
+                    <?php if(!empty($info['time_first']) && !empty($info['time_total'])): ?>
                     <p class="time"><?php echo
                             number_format($info['time_first'], 3, ',', '.'). '/' .
                             number_format($info['time_total'], 3, ',', '.'); ?></p>
+                    <?php endif; ?>
                     <p class="message"><?php echo $info['message']; ?></p>
                 </div>
             <?php
