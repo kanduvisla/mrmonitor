@@ -110,6 +110,7 @@ function check_url($url)
 
             // Either the www or non-www domain doesn't exist.
             $result['message'] = ($resultNonWww['code'] == 0 ? 'non-www ' : 'www ') . 'url doesn\'t exist.';
+            $result['success'] = 2;
 
         } else {
 
@@ -157,6 +158,7 @@ function check_url($url)
 
                             // Site is too small:
                             $result['message'] = 'Site is less than 1kb. Something must be wrong!';
+
                         } else {
 
                             // All cool:
@@ -164,6 +166,8 @@ function check_url($url)
                             $result['message'] = 'Ok';
                         }
                     } else {
+
+                        // Error!
                         $result['message'] = 'Www and non/www don\'t return 200/301/302';
                         $result = array_merge($result, $resultNonWww);
                     }
@@ -172,7 +176,7 @@ function check_url($url)
 
                     // Duplicate content
                     $result['message'] = 'Both www and non-www return 200. One should be a 301/302 to the other';
-
+                    $result['success'] = 2;
                 }
 
             } else {
@@ -185,7 +189,10 @@ function check_url($url)
         }
 
     } else {
-        $result['message'] = 'URL must start with http://';
+
+        $result['message'] = 'URL must start with http:// (' . $url . ')';
+        $result['success'] = 2;
+
     }
 
     return $result;
@@ -200,8 +207,11 @@ if ($argc == 2) {
         $currentLine = 0;
         $file = fopen($url, "r");
         while(!feof($file)){
-          $line = fgets($file);
-          $linecount++;
+            $line = fgets($file);
+            if(!empty($line[0]) && $line[0] != 'site')
+            {
+                $linecount++;
+            }
         }
         fclose($file);
 
@@ -213,9 +223,10 @@ if ($argc == 2) {
         echo "Checking " . ($linecount - 1) . " URL's: \n";
         while($line = fgetcsv($file))
         {
-            if($line[0] != 'site') {
-                $result = check_url($line[0]);
-                $csv[] = array_values($result);
+            if(!empty($line[0]) && $line[0] != 'site')
+            {
+                 $result = check_url($line[0]);
+                 $csv[] = array_values($result);
             }
             $currentLine ++;
             $p = round(($currentLine / $linecount) * 100);

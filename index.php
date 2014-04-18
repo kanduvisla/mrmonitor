@@ -29,16 +29,33 @@
         while($url = fgetcsv($file))
         {
             $info = array_combine($headers, $url);
-            $class = $info['success'] == '1' ? 'success' : 'error';
-            if($info['success'] != '1') {
+            // $info['success'] == '1' ? 'success' : 'error';
+            $class = '';
+            switch($info['success']) {
+                case '0' :
+                    $class = 'error';
+                    break;
+                case '1' :
+                    $class = 'success';
+                    break;
+                case '2' :
+                    $class = 'warning';
+                    break;
+            }
+            $warning = false;
+            if($info['success'] == '0') {
                 $happy = false;
                 $error = true;
             }
             // Check for slow speed:
             if($info['time_first'] > 0.5 || $info['time_total'] > 2)
             {
-                $class .= ' slow';
                 $happy = false;
+                $warning = true;
+                $info['message'] = 'Site is slow';
+            }
+            if($warning) {
+                $class .= ' warning';
             }
             if($linecount > 25) { $class .= ' count50'; }
             if($linecount > 50) { $class .= ' count100'; }
@@ -61,9 +78,7 @@
 
         if($happy)
         {
-            ?>
-                <div id="happy">☺</div>
-            <?php
+            echo '<div id="happy">☺</div>';
         }
 
         if($error)
