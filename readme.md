@@ -14,7 +14,7 @@ Just put it on a simple webserver (or a local environment, like vagrant) and nav
 schedule your ping-session (every 5 minutes for example). This hasn't have to be the webserver by the way, a Mac with
 php installed would be enough:
 
-    $ php ping.php [csv-file]
+    $ php run.php [csv-file]
 
 This will output a result.csv-file, which in it's turn is read by the webserver. Oh yeah, and put up the volume on your
 monitoring system :-)
