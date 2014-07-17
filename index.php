@@ -8,7 +8,7 @@
 <body>
 <?php
     // Screensaver for at night:
-    if(date('H') < 18 && date('H') > 8):
+    if(date('H') < 18 && date('H') > 7):
 ?>
 <?php
     if(file_exists('result.csv'))
