@@ -6,7 +6,7 @@
  */
 
 // Read sites
-$handle = fopen('_sites.csv', 'r');
+$handle = fopen('sites.csv', 'r');
 
 // Create CSV file:
 $csv = array("url","success","message","ip","www","time_first","time_total","code","size","redirect_url","redirect_from");
