@@ -7,10 +7,6 @@
 </head>
 <body>
 <?php
-    // Screensaver for at night:
-    if(date('H') < 18 && date('H') > 7):
-?>
-<?php
     if(file_exists('result.csv'))
     {
         // Get the number of lines:
@@ -92,10 +88,5 @@
 
     }
 ?>
-<?php else: ?>
-        <style type="text/css">
-            html { background: #000; }
-        </style>
-<?php endif; ?>
 </body>
 </html>
