@@ -18,10 +18,10 @@ require('new/Site.php');
 $site = new Site($url);
 $results = $site->getTestResults();
 
-file_put_contents('results.csv.tmp', '"' . implode('","', $results) . '"' . "\n", FILE_APPEND);
-
 // Check if this was the last test:
 if($argc == 3) {
+    file_put_contents('results.csv.tmp', '"' . implode('","', $results) . '"' . "\n", FILE_APPEND);
+
     $count = $argv[2];
     $total = file_get_contents('counter.tmp');
     $total ++;
@@ -36,4 +36,6 @@ if($argc == 3) {
     } else {
         file_put_contents('counter.tmp', $total);
     }
+} else {
+    var_dump($results);
 }

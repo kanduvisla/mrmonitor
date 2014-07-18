@@ -96,7 +96,7 @@ class Site
      */
     private function validateRedirect()
     {
-        if(preg_match('/www\./', $this->_url)) {
+        if(preg_match('/www\./', $this->_url) && $this->_info['code'] != 0) {
             echo "check redirects for www domains ...\n";
             // Check if www-domain redirects to non-www or the other way around:
             if($this->isRedirect())
