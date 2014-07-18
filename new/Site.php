@@ -34,6 +34,7 @@ class Site
             'time_first'    => '',
             'time_total'    => '',
             'code'          => '',
+            'size'          => '',
             'redirect_from' => $this->_url,
             'redirect_to'   => ''
         );
@@ -122,6 +123,7 @@ class Site
         // Set test data:
         $this->_tests['redirect_to'] = $this->_url;
         $this->_tests['ip'] = $this->_info['ip'];
+        $this->_tests['size'] = $this->_info['size'];
     }
 
     private function addTestMessage($msg)

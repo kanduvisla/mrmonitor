@@ -14,37 +14,73 @@ q:before, q:after, blockquote:before, blockquote:after { content: ""; content: n
 
 a img { border: none; }
 
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary { display: block; }
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary { display: block; }
 
 html { background: #111; font-family: sans-serif; overflow: hidden; }
 
 html, body { width: 100%; height: 100%; }
 
-.site { background: linear-gradient(#ccff00, #88aa00); -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; -webkit-box-shadow: 0px 0px 100px #44aa44 inset; -moz-box-shadow: 0px 0px 100px #44aa44 inset; box-shadow: 0px 0px 100px #44aa44 inset; width: 20%; height: 20%; float: left; padding: 20px 0; position: relative; outline: 3px solid #000; }
-.site .url { text-align: center; font-size: 24px; color: #fff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
+.site { background: linear-gradient(#ccff00, #88aa00); -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; -moz-box-shadow: 0px 0px 100px #44aa44 inset; -webkit-box-shadow: 0px 0px 100px #44aa44 inset; box-shadow: 0px 0px 100px #44aa44 inset; width: 50%; height: 65px; padding: 10px; float: left; position: relative; outline: 3px solid #000;     /*
+	&.count50 {
+		width: 10%;
+		.url {
+			font-size: 16px;
+		}
+		.code {
+			font-size: 75px;
+		}
+	}
+	&.count100 {
+		height: 10%;
+	}
+	&.count200 {
+		width: 5%;
+		.url {
+			font-size: 12px;
+		}
+		.code {
+			font-size: 40px;
+			bottom: 50px;
+			width: 100%;
+			text-align: center;
+			left: 0;
+		}
+		.time {
+			right: 0;
+			width: 100%;
+			text-align: center;
+		}
+	}
+	&.count400 {
+		height: 5%;
+		.code {
+			left: 10px;
+			bottom: 10px;
+			font-size: 12px;
+			text-align: left;
+			width: auto;
+		}
+		.time {
+			right: 10px;
+			bottom: 10px;
+			text-align: right;
+			width: auto;
+		}
+	}
+	*/ }
+.site .url { font-size: 24px; color: #fff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); }
 .site .code, .site .time { position: absolute; }
-.site .code { left: 20px; font-size: 150px; font-weight: bold; color: #080; opacity: .1; bottom: 0; }
-.site .time { right: 20px; bottom: 20px; font-size: 12px; opacity: .5; }
-.site .message { padding: 20px; text-align: center; margin-top: 20px; color: #fff; opacity: .5; }
-.site.warning { background: linear-gradient(#ffcc00, #aa8800); -webkit-box-shadow: 0px 0px 100px #888800 inset; -moz-box-shadow: 0px 0px 100px #888800 inset; box-shadow: 0px 0px 100px #888800 inset; }
+.site .code { right: 10px; top: 5px; font-size: 40px; font-weight: bold; color: #080; opacity: .1; }
+.site .time { right: 10px; bottom: 10px; font-size: 12px; opacity: .5; }
+.site .message { position: absolute; left: 10px; bottom: 10px; color: #fff; opacity: .5; font-size: 12px; }
+.site.warning { background: linear-gradient(#ffcc00, #aa8800); -moz-box-shadow: 0px 0px 100px #888800 inset; -webkit-box-shadow: 0px 0px 100px #888800 inset; box-shadow: 0px 0px 100px #888800 inset; }
 .site.warning .time { color: #fff; opacity: 1; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); }
 .site.warning .code { color: #660; }
-.site.error { background: linear-gradient(#cc0000, #aa0000); -webkit-box-shadow: 0px 0px 100px #440000 inset; -moz-box-shadow: 0px 0px 100px #440000 inset; box-shadow: 0px 0px 100px #440000 inset; }
+.site.error { background: linear-gradient(#cc0000, #aa0000); -moz-box-shadow: 0px 0px 100px #440000 inset; -webkit-box-shadow: 0px 0px 100px #440000 inset; box-shadow: 0px 0px 100px #440000 inset; }
 .site.error .time { color: #fff; opacity: 1; }
 .site.error .code { color: #fff; text-shadow: 0px 0px 40px #f00; opacity: 1; }
 .site.error .message { opacity: 1; }
-.site.count50 { width: 10%; }
-.site.count50 .url { font-size: 16px; }
-.site.count50 .code { font-size: 75px; }
-.site.count100 { height: 10%; }
-.site.count200 { width: 5%; }
-.site.count200 .url { font-size: 12px; }
-.site.count200 .code { font-size: 40px; bottom: 50px; width: 100%; text-align: center; left: 0; }
-.site.count200 .time { right: 0; width: 100%; text-align: center; }
-.site.count400 { height: 5%; }
-.site.count400 .code { left: 10px; bottom: 10px; font-size: 12px; text-align: left; width: auto; }
-.site.count400 .time { right: 10px; bottom: 10px; text-align: right; width: auto; }
 
-#happy { position: absolute; z-index: 10; width: 100%; text-align: center; padding-top: 10%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; color: #fff; font-size: 1000px; text-shadow: 0px 0px 100px #080; height: 100%; background: rgba(128, 255, 0, 0.1); }
+#happy { position: absolute; z-index: 10; width: 100%; text-align: center; padding-top: 10%; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; color: #fff; font-size: 1000px; text-shadow: 0px 0px 100px #080; height: 100%; background: rgba(128, 255, 0, 0.1); }
 
-#error { position: absolute; z-index: 10; width: 100%; height: 100%; -webkit-box-shadow: 0 0 100px red inset, 0 0 200px red inset; -moz-box-shadow: 0 0 100px red inset, 0 0 200px red inset; box-shadow: 0 0 100px red inset, 0 0 200px red inset; }
+#error { position: absolute; z-index: 10; width: 100%; height: 100%; -moz-box-shadow: 0 0 100px red inset, 0 0 200px red inset; -webkit-box-shadow: 0 0 100px red inset, 0 0 200px red inset; box-shadow: 0 0 100px red inset, 0 0 200px red inset; }
