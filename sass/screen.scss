@@ -17,6 +17,24 @@ html, body {
 	height: 100%;
 }
 
+body {
+    box-sizing: border-box;
+    padding: 4px;
+}
+
+@-webkit-keyframes error-animation {
+    0% {
+        //background: linear-gradient(#c00, #a00);
+    }
+    50% {
+        //background: linear-gradient(#f00, #c00);
+        -webkit-filter: brightness(140%);
+    }
+    100% {
+        //background: linear-gradient(#c00, #a00);
+    }
+}
+
 .site {
 	background: linear-gradient(#cf0, #8a0);
 	@include box-sizing(border-box);
@@ -26,11 +44,11 @@ html, body {
 //	float: left;
 //	padding: 20px 0;
     width: 50%;
-    height: 65px;
+    height: 150px;
     padding: 10px;
     float: left;
 	position: relative;
-    outline: 3px solid #000;
+    outline: 4px solid #000;
 	.url {
 		// text-align: center;
 		font-size: 24px;
@@ -65,6 +83,14 @@ html, body {
         opacity: .5;
         font-size: 12px;
     }
+    .fa {
+        position: absolute;
+        bottom: 30px;
+        right: 12px;
+        color: #fff;
+        opacity: .3;
+        font-size: 50px;
+    }
 	&.warning {
 		background: linear-gradient(#fc0, #a80);
 		@include box-shadow(0px 0px 100px #880 inset);
@@ -76,9 +102,13 @@ html, body {
 		.code {
 			color: #660;
 		}
+        .fa {
+            opacity: 1;
+        }
 	}
 	&.error {
 		background: linear-gradient(#c00, #a00);
+        @include animation(error-animation 1s infinite);
 		@include box-shadow(0px 0px 100px #400 inset);
 		.time {
 			color: #fff;
@@ -91,6 +121,10 @@ html, body {
 		}
         .message {
             opacity: 1;
+        }
+        .fa {
+            opacity: 1;
+            color: #ff0;
         }
 	}
     /*

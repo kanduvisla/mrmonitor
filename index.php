@@ -2,6 +2,7 @@
 <head>
     <title>Mr. Monitor</title>
     <meta charset="utf-8"/>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
 	<link rel="stylesheet" href="stylesheets/screen.css" />
     <!-- Refresh every 5 minutes: -->
     <meta http-equiv="refresh" content="300">
@@ -50,15 +51,18 @@
         {
             // $info['success'] == '1' ? 'success' : 'error';
             $class = '';
+            $icon  = 'check';
             switch($info['success']) {
                 case '0' :
                     $class = 'error';
+                    $icon  = 'warning';
                     break;
                 case '1' :
                     $class = 'success';
                     break;
                 case '2' :
                     $class = 'warning';
+                    $icon  = 'warning';
                     break;
             }
             $warning = false;
@@ -83,6 +87,7 @@
 
             ?>
                 <div class="site <?php echo $class; ?>">
+                    <span class="fa fa-<?php echo $icon; ?>"></span>
                     <p class="url"><?php echo str_replace(array('http://', 'www.'), '', $info['url']); ?></p>
                     <p class="code"><?php echo $info['code']; ?></p>
                     <?php if(!empty($info['time_first']) && !empty($info['time_total'])): ?>
@@ -96,7 +101,7 @@
 
         if($happy)
         {
-            echo '<div id="happy">☺</div>';
+            // echo '<div id="happy">☺</div>';
         }
 
         if($error)
