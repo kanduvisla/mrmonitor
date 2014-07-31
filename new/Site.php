@@ -10,6 +10,7 @@ class Site
     private $_url;
     private $_info;
     private $_tests;
+    private $_lastCurlError;
 
     const MAX_REDIRECTS = 10;
     const MAX_TIME_FIRST = 0.500;
@@ -21,8 +22,9 @@ class Site
      */
     public function __construct($urlString)
     {
-        $this->_url   = trim(strtolower($urlString));
-        $this->_info  = $this->getInfo(true);
+        $this->_url             = trim(strtolower($urlString));
+        $this->_info            = $this->getInfo(true);
+        $this->_lastCurlError   = '';
 
         // Prepare array to hold the test results:
         $this->_tests = array(
@@ -86,7 +88,19 @@ class Site
             echo '[FAIL] status code is not 200: ' . $this->_info['code'] . "\n";
             $this->_tests['success'] = 0;
             if($this->_info['code'] == 0) {
-                $this->addTestMessage('Domain does not exist');
+                // Check CURL error:
+                if(!empty($this->_lastCurlError))
+                {
+                    if(strpos($this->_lastCurlError, '/SSL3_GET_SERVER_CERTIFICATE/') != -1)
+                    {
+                        $this->addTestMessage('SSL Certificate is not valid');
+                    } else {
+                        // Just show the error then:
+                        $this->addTestMessage(str_replace(array("\r", "\n"), '', $this->_lastCurlError));
+                    }
+                } else {
+                    $this->addTestMessage('Error occured (does domain exist?)');
+                }
             }
         }
     }
@@ -158,6 +172,10 @@ class Site
         {
             $info = $this->_info;
         }
+        if(!empty($info['redirect_url']) && $info['redirect_url'] != $this->_url)
+        {
+            return true;
+        }
         return in_array($info['code'], array(301, 302));
     }
 
@@ -172,6 +190,7 @@ class Site
             $this->_url  = $this->_info['redirect_url'];
             $this->_info = $this->getInfo(true);
             $count ++;
+            echo "Redirecting to " . $this->_url . "\n";
         }
     }
 
@@ -191,11 +210,14 @@ class Site
         // Get Curl information:
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         if($headerOnly) {
             curl_setopt($ch, CURLOPT_HEADER, true);
         }
         curl_exec($ch);
         $info = curl_getinfo($ch);
+        // Store last CURL error:
+        $this->_lastCurlError = curl_error($ch);
         $info = array(
             'ip' => (isset($info['primary_ip']) ? $info['primary_ip'] : ''),
             'www' => $this->isWww($url),
@@ -205,6 +227,7 @@ class Site
             'size' => $info['size_download'],
             'redirect_url' => strtolower($info['redirect_url'])
         );
+
         return $info;
     }
 }
